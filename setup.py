@@ -1,7 +1,13 @@
 from setuptools import setup
 
+import versioneer
+
+version=versioneer.get_version()
+cmdclass=versioneer.get_cmdclass()
+
 setup(name='when-changed',
-      version='0.3.0',
+      version=version,
+      cmdclass=cmdclass,
       description='Run a command when a file is changed',
       author='Johannes H. Jensen',
       author_email='joh@pseudoberries.com',

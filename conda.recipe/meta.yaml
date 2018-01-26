@@ -1,0 +1,48 @@
+{% set name = "when-changed" %}
+{% set version = "0.3.0" %}
+{% set file_ext = "tar.gz" %}
+{% set hash_type = "sha256" %}
+{% set hash_value = "1f0b90c5f725223aab77290b4ce5cd79672702a1f3fbe620bdef440c106418e2" %}
+
+package:
+  name: '{{ name|lower }}'
+  version: '{{ version }}'
+
+source:
+  fn: '{{ name }}-{{ version }}.{{ file_ext }}'
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.{{ file_ext }}
+  '{{ hash_type }}': '{{ hash_value }}'
+
+build:
+  number: 0
+  script: python setup.py install --single-version-externally-managed --record=record.txt
+
+requirements:
+  build:
+    - python
+    - setuptools
+    - watchdog
+  run:
+    - python
+    - watchdog
+
+test:
+  imports:
+    - whenchanged
+
+about:
+  home: https://github.com/joh/when-changed
+  license: BSD
+  license_family: BSD
+  license_file: ''
+  summary: Make when-changed cross-platform
+  description: "                                  when-changed\n\n                      Run a command when a file is changed\n\n\n    ~ What is it?\n\n      Tired of switching to the shell to test the changes\
+    \ you just made to\n      your code? Starting to feel like a mindless drone, manually running\n      pdflatex for the 30th time to see how your resume now looks?\n\n      Worry not, when-changed is\
+    \ here to help! Whenever it sees that you have\n      changed the file, when-changed runs any command you specify.\n\n      So to generate your latex resume automatically, you can do this:\n\n     \
+    \ $\_when-changed CV.tex pdflatex CV.tex\n\n      Sweetness!\n\n\n    ~ What do I need?\n\n      Python 2.6+\n      watchdog\n\n\n    ~ Installation\n\n      pip install https://github.com/joh/when-changed/archive/master.zip\n\
+    \n\n    ~ Usage\n\n      when-changed FILE COMMAND...\n      when-changed FILE [FILE ...] -c COMMAND\n"
+  doc_url: ''
+  dev_url: ''
+
+extra:
+  recipe-maintainers: ''
